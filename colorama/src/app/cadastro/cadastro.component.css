@@ -14,6 +14,16 @@ h2 {
     color: #333333;
 }
 
+.C-container {
+    position: absolute;
+    top: 120px;   
+    left: 130px;   
+}
+
+.C-container img {
+    width: 650px;
+    height: auto;
+}
 .background{
     background: linear-gradient(to right, #7a5cd9, #4f8ff7);
     display: flex;
@@ -24,10 +34,10 @@ h2 {
 }
 
 .container {
-    max-width: 350px;
+    max-width: 500px;
     width: 100%;
     padding: 20px;
-    margin: 0 auto;
+    margin: 0 auto 0 1000px; 
     background: hwb(0 100% 0% / 0.9);
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -78,7 +88,6 @@ h2 {
 }
 
 .submit-button {
-    width: 100%;
     height: 50px;
     background-color: #5100b5;
     border: none;
@@ -88,23 +97,66 @@ h2 {
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s;
-    margin-top: 30px;
 }
 
 .submit-button:hover {
     background-color: #6e16da;
 }
 
-/* Estilos para o link de login */
+.prev-button,.next-button {
+    background-color: #5bc0de;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+
+.prev-button:hover,.next-button:hover {
+    background-color: #20b6e3;
+}
+
+
+
+.button-container {
+    display: flex;
+    margin-top: 45px; 
+    justify-content: center; 
+
+}
+
+.prev-button, .next-button {
+    width: 100%; 
+    max-width: 300px; 
+}
+
+
+.submit-button {
+    width: 100%; 
+    margin-top: 20px;
+}
+
+
 .link-container {
-    margin-top: 20px; /* Espaço entre o botão e o link */
+    margin-top: 20px;
     text-align: center;
 }
 
 .link-container a {
-    color: #5100b5; /* Cor inicial do link */
-    text-decoration: none; /* Remove o sublinhado padrão */
-    font-weight: bold; /* Destaque visual para o texto */
-    transition: color 0.3s ease; /* Transição suave ao passar o mouse */
+    color: #5100b5;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
 
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
+}

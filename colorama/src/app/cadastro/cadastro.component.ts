@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./cadastro.component.css']
 })
 export class CadastroComponent implements OnInit {
+  etapa: number = 1; // Controle da etapa do formulário
   dadosPessoaisForm: FormGroup;
   enderecoForm: FormGroup;
 
@@ -61,6 +62,16 @@ export class CadastroComponent implements OnInit {
     }
   }
 
+  proximaEtapa() {
+    this.etapa = 2; // Avança para a próxima etapa (endereço)
+  }
+  
+  
+
+  voltarEtapa() {
+    this.etapa = 1;
+  }
+
   cadastrar() {
     if (this.dadosPessoaisForm.valid && this.enderecoForm.valid) {
       const dadosCliente = {
@@ -68,9 +79,9 @@ export class CadastroComponent implements OnInit {
         ...this.enderecoForm.value
       };
       console.log('Cadastro realizado:', dadosCliente);
+      alert('Cadastro realizado com sucesso!');
     } else {
       alert('Preencha todos os campos corretamente!');
     }
   }
 }
-
