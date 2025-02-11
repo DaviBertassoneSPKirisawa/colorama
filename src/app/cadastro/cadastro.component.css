@@ -9,14 +9,14 @@ h1 {
     font-family: Comic Sans MS, Comic Sans, cursive;
 }
 
-h2 {
+h2 {    
     text-align: center;
     color: #333333;
 }
 
 .C-container {
     position: absolute;
-    top: 120px;   
+    top: 100px;   
     left: 130px;   
 }
 

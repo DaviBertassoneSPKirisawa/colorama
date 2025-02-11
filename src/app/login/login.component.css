@@ -11,9 +11,9 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column; /* Adiciona direção vertical */
+    flex-direction: column;
     padding: 0;
-    margin: 0; /* Adiciona espaçamento para evitar que o conteúdo grude nas bordas */    
+    margin: 0;     
 }
 
 h1 {
@@ -54,9 +54,10 @@ h1 {
     justify-content: center;
     width: 100vw;
     height: 100vh;
-    justify-content: center;  /* Isso deve centralizar tudo horizontalmente */
-    flex-direction: column;  /* Mantém os elementos um abaixo do outro */
+    justify-content: center;
+    flex-direction: column;  
     position: relative;
+    margin: 0;    
 }
 
 .container {

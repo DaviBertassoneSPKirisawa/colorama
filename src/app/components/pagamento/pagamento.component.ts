@@ -41,12 +41,12 @@ export class PagamentoComponent {
         }
       });
     }
-  }
+  }   
 
   gerarQrCodePix() {
     const request = {
-      Metodo: 1,  // 1 corresponde ao Pix
-      Valor: 90.00,  // Defina o valor da compra
+      Metodo: 1,  
+      Valor: 90.00,  
     };
 
     // Envia a requisição POST para o backend
@@ -54,7 +54,7 @@ export class PagamentoComponent {
       .subscribe(response => {
         // Converte o blob para uma URL de objeto para exibir a imagem
         const url = window.URL.createObjectURL(response);
-        this.qrCodeBase64 = url;  // Agora você usa a URL para a imagem
+        this.qrCodeBase64 = url; 
         console.log("QR Code gerado com sucesso!");
       }, error => {
         console.error('Erro ao gerar QR Code:', error);
