@@ -1,10 +1,3 @@
-<div class="menu">
-  <span class="menu-item">HOME</span>
-  <span class="menu-item">PRODUTOS</span>
-  <span class="menu-item">CATEGORIAS</span>
-  <span class="menu-item">MEUS PEDIDOS</span>
-</div>
-
 <div class="container">
   <h2>Finalizar Compra</h2>
 
@@ -62,6 +55,12 @@
         </button>
         <button (click)="selecionarPagamento('pix')">Pix</button>
         <button (click)="selecionarPagamento('boleto')">Boleto Bancário</button>
+      </div>
+
+      <!-- Exibição do QR Code -->
+      <div *ngIf="qrCodeBase64">
+        <h3>QR Code Pix</h3>
+        <img [src]="qrCodeBase64" alt="QR Code Pix" />
       </div>
     </div>
   </div>
