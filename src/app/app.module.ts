@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'; // Importação para requisições HTTP
-import { ReactiveFormsModule } from '@angular/forms'; // Importação para formulários reativos
+import { HttpClientModule } from '@angular/common/http'; // Para requisições HTTP
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Adicionando FormsModule
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
-import { PagamentoComponent } from './pagamento/pagamento.component';
+import { PagamentoComponent } from './components/pagamento/pagamento.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +20,7 @@ import { PagamentoComponent } from './pagamento/pagamento.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule, 
+    FormsModule, // Adicionado para suportar ngModel
     ReactiveFormsModule 
   ],
   providers: [],

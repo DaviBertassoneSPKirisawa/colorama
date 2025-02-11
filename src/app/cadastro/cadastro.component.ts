@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastro',
@@ -12,7 +13,7 @@ export class CadastroComponent implements OnInit {
   dadosPessoaisForm: FormGroup;
   enderecoForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
     // Formulário de Dados Pessoais
     this.dadosPessoaisForm = this.fb.group({
       nome: ['', Validators.required],
@@ -38,7 +39,7 @@ export class CadastroComponent implements OnInit {
   ngOnInit(): void {}
 
   buscarCEP() {
-    const cep = this.enderecoForm.get('cep')?.value.replace('-', '');
+    let cep = this.enderecoForm.get('cep')?.value.replace('-', '');  // Remover traços do CEP
     if (cep && cep.length === 8) {
       this.http.get(`https://viacep.com.br/ws/${cep}/json/`).subscribe(
         (data: any) => {
@@ -65,23 +66,74 @@ export class CadastroComponent implements OnInit {
   proximaEtapa() {
     this.etapa = 2; // Avança para a próxima etapa (endereço)
   }
-  
-  
 
   voltarEtapa() {
     this.etapa = 1;
   }
 
   cadastrar() {
+    console.log('Formulário de Dados Pessoais:', this.dadosPessoaisForm.valid);
+    console.log('Formulário de Endereço:', this.enderecoForm.valid);
+
+    // Verificar o status de cada campo do formulário de Dados Pessoais
+    Object.keys(this.dadosPessoaisForm.controls).forEach(field => {
+      const control = this.dadosPessoaisForm.get(field);
+      if (control?.valid) {
+        console.log(`${field} está preenchido corretamente:`, control.value);
+      } else {
+        console.log(`${field} está incorreto. Erro(s):`, control?.errors);
+      }
+    });
+
+    // Verificar o status de cada campo do formulário de Endereço
+    Object.keys(this.enderecoForm.controls).forEach(field => {
+      const control = this.enderecoForm.get(field);
+      if (control?.valid) {
+        console.log(`${field} está preenchido corretamente:`, control.value);
+      } else {
+        console.log(`${field} está incorreto. Erro(s):`, control?.errors);
+      }
+    });
+
     if (this.dadosPessoaisForm.valid && this.enderecoForm.valid) {
+      // Tratar o CEP para ser um número
+      const cep = this.enderecoForm.get('cep')?.value.replace('-', '').replace(' ', ''); // Remover traços e espaços
+      const cepNum = Number(cep); // Garantir que seja um número
+
       const dadosCliente = {
-        ...this.dadosPessoaisForm.value,
-        ...this.enderecoForm.value
+        nome: this.dadosPessoaisForm.get('nome')?.value,
+        cpf: this.dadosPessoaisForm.get('cpf')?.value,
+        email: this.dadosPessoaisForm.get('email')?.value,
+        senha: this.dadosPessoaisForm.get('senha')?.value,
+        telefone: this.dadosPessoaisForm.get('telefone')?.value,
+        dataDeNascimento: this.dadosPessoaisForm.get('dataDeNascimento')?.value,
+        // Passar os dados de endereço diretamente, sem objeto aninhado
+        endereco: this.enderecoForm.get('rua')?.value,  // Endereço como uma string
+        numero: this.enderecoForm.get('numero')?.value,
+        complemento: this.enderecoForm.get('complemento')?.value,
+        cep: cepNum,  // Passar o CEP como número
+        cidade: this.enderecoForm.get('cidade')?.value,
+        estado: this.enderecoForm.get('estado')?.value
       };
-      console.log('Cadastro realizado:', dadosCliente);
-      alert('Cadastro realizado com sucesso!');
+
+      console.log('Dados do Cliente:', dadosCliente);
+
+      // Enviar os dados para a API do backend
+      this.http.post('http://localhost:5039/api/Usuario/CadastrarCliente', dadosCliente)
+        .subscribe(
+          (response) => {
+            console.log('Cadastro realizado com sucesso!', response);
+            alert('Cadastro realizado com sucesso!');
+            // Redirecionar para a página de login ou outra página
+            this.router.navigate(['/login']);
+          },
+          (error) => {
+            console.error('Erro ao cadastrar:', error);
+            alert('Erro ao realizar cadastro. Tente novamente.');
+          }
+        );
     } else {
-      alert('Preencha todos os campos corretamente!');
+      alert('Por favor, preencha todos os campos corretamente!');
     }
   }
 }
